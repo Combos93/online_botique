@@ -4,32 +4,26 @@ require_relative 'lib/film'
 require_relative 'lib/lps'
 require_relative 'lib/collection'
 
-total_price = 0
+total = 0
 choice = nil
 
 collection = Collection.from_dir(File.dirname(__FILE__) + '/data')
 
-# collection.sort!(by: :title, order: :desc)
-#
-# price - по цене; amount - количество; title - название
-# asc - по убыванию; desc - по возрастанию
+botique = collection.products #.each { |product| puts product } небольшая напоминалка.
 
-botique = collection.all.each { |product| puts product }
-# puts botique.size
+until choice == 'x'
+  puts "\nЧто хотите купить?\n\n"
 
-while(choice != 'x')
-  # Покажем пользователю ассортимент и предложим что-нибудь купить
-  Product.showcase(botique)
+  botique.each.with_index(1) {|product, index| print "#{index}: #{product.to_s}\n\n"}
+
+  puts "x. Покинуть магазин\n\n"
 
   choice = STDIN.gets.chomp
 
-  # Проверим, что пользователь выбрал какой-то продукт
-  if(choice != 'x')
-    # Купим продукт и увеличим стоимость покупок
-    product = botique[choice.to_i]
-    total_price += product.buy
+  unless choice == 'x'
+    product = botique[choice.to_i - 1]
+    total += product.buy
   end
 end
 
-# Наконец, покажем, сколько должен пользователь
-puts "Спасибо за покупки, с Вас #{total_price} руб."
+puts "Спасибо за покупки, с Вас #{total} рублей"

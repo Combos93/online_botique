@@ -17,13 +17,13 @@ class LPs < Product
   def initialize(params)
     super
 
-    @author = params[:author]
-    @title = params[:title]
+    @group = params[:group]
+    @album = params[:album]
     @genre = params[:genre]
     @year = params[:year]
   end
 
   def to_s
-    "В жанре #{@genre} вышел #{@album}(#{@year}) - #{@group} #{super}"
+    "Группа \"#{@group}\", Жанр: #{@genre}. Альбом - #{@album}(#{@year}) - #{super}"
   end
 end

@@ -1,7 +1,7 @@
 class Collection
-  attr_reader :collection
+  attr_reader :products, :collection
 
-  PRODUCT_TYPES = {
+  TYPES = {
     film: {
       dir: 'films',
       class: Film
@@ -23,7 +23,7 @@ class Collection
   def self.from_dir(path_to_dir)
     @collection = []
 
-    PRODUCT_TYPES.each do |type, hash|
+    TYPES.each do |_type, hash|
       product_dir = hash[:dir]
       product_class = hash[:class]
 
@@ -35,18 +35,14 @@ class Collection
     self.new(@collection)
   end
 
-  def all
-    @products
-  end
-
   def sort!(params)
     case params[:by]
     when :title
-      @products.sort_by! {|product| product.to_s}
+      @products.sort_by! { |product| product.to_s }
     when :price
-      @products.sort_by! {|product| product.price}
+      @products.sort_by! { |product| product.price }
     else
-      @products.sort_by! {|product| product.amount}
+      @products.sort_by! { |product| product.amount }
     end
 
     @products.reverse! if params[:order] == :asc
